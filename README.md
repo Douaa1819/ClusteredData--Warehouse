@@ -35,5 +35,149 @@ A Spring Boot application to manage and persist Foreign Exchange  deals in a dat
 ---
 
 ## Project Structure
+```
+    ClustredData/
+├── docker-compose.yml # Docker compose setup (app + DB)
+├── Dockerfile # Multi-stage Docker build
+├── Makefile # Commands to build, run, test, and clean
+├── pom.xml # Maven dependencies and build config
+├── README.md # This documentation
+├── src/
+│ ├── main/
+│ │ ├── java/com/progressoft/clusterddata/
+│ │ │ ├── config/ # Spring and app configurations
+│ │ │ ├── controller/ # REST API controllers
+│ │ │ ├── validator/ # Validation logic (CurrencyValidator, etc.)
+│ │ │ ├── dto/ # Data Transfer Objects
+│ │ │ ├── entity/ # JPA entities (Deal, etc.)
+│ │ │ ├── exception/ # Custom exceptions and global handlers
+│ │ │ ├── mapper/ # MapStruct mappers (DealMapper)
+│ │ │ ├── repository/ # Spring Data JPA repositories
+│ │ │ ├── service/ # Business logic services (DealService)
+│ │ │ └── infrastructure/ # Currency holders, CSV readers, etc.
+│ └── resources/ # Application properties and CSV files
+└── test/ # Unit and integration tests
+└── target/ # Maven build outputs
+````
+
+---
+
+## ⚙️ Installation & Setup
+
+###  Prerequisites
+
+- [Docker](https://www.docker.com/) & Docker Compose
+- [Java 21](https://jdk.java.net/21/)
+- [Maven](https://maven.apache.org/)
+- [Git](https://git-scm.com/)
+---
+###  Clone the Repository
+
+```bash
+git clone https://github.com/Douaa1819/ClusteredData--Warehouse.git
+`````
+---
+
+### 📡 API - Endpoints
+
+####  Create a Deal
+
+- **Method:** `POST`
+- **URL:** `http://localhost:8081/api/v1/deals`
+
+####  Request Example
+
+```json
+{
+  "id": "DEAL123456",
+  "fromCurrencyCode": "USD",
+  "toCurrency": "EUR",
+  "dealAmount": 1500.75
+}
+```
+ #### Réponse (HTTP 201 Created)
+```json
+{
+"id": "DEAL123456",
+"fromCurrencyCode": "USD",
+"toCurrency": "EUR",
+"dealTimestamp": "2025-07-28T15:01:23.456789",
+"dealAmount": 1500.75
+}
+```
+---
+### Validation Rules
+- id: must not be blank
+
+- fromCurrencyCode and toCurrency:
+
+- Must be different
+
+- Must exist in the currency list (loaded from a CSV via CurrencyHolder)
+
+- dealAmount: must be positive and not null
+
+- Duplicate id will result in an error via RequestAlreadyExistException
 
 
+---
+### Error Handling
+#### Custom exceptions:
+
+- InvalidCurrencyException
+
+- CurrencyNotAvailableException
+
+- RequestAlreadyExistException
+
+- Global error handling with @RestControllerAdvice:
+
+- Returns a structured JSON with:
+
+- Timestamp
+
+- Error details
+
+- Logging is handled with SLF4J
+
+---
+
+ ### Testing
+Unit tests written with JUnit 5 and Mockito
+
+-Test coverage includes:
+
+-Deal service logic (DealService)
+
+-Currency validation
+
+-Repository interaction (mocked)
+
+#### Run tests:
+```
+make test
+```
+---
+### Dockerization
+- Multi-stage Dockerfile for lightweight image builds
+
+- Docker Compose to orchestrate the application and PostgreSQL
+
+Volumes:
+
+- PostgreSQL data persistence
+
+- Maven cache to speed up builds
+
+---
+
+
+## 🛠 Makefile Commands
+
+| Command       | Description                                 |
+|---------------|---------------------------------------------|
+| `make help`   | Display help message                        |
+| `make up`     | Start application and database containers   |
+| `make down`   | Stop and remove containers                  |
+| `make test`   | Run unit tests                              |
+| `make clean`  | Remove build artifacts (e.g. `target/`)     |
