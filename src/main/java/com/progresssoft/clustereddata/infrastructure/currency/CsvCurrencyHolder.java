@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
-@Component
 public class CsvCurrencyHolder implements CurrencyHolder {
 
     private final Set<String> currencyCodes;

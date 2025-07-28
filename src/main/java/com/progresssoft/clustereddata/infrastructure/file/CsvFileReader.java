@@ -8,14 +8,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@Component
+
 public class CsvFileReader implements FileReader {
 
     @Override
     public Set<String> read(Path path) {
-        try {
-            return Files.lines(path)
+        try (Stream<String> lines = Files.lines(path)) {
+            return lines
                     .skip(1)
                     .map(line -> line.split(",")[0].trim())
                     .collect(Collectors.toSet());
