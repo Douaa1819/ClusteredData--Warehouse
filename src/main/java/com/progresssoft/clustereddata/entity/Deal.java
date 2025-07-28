@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Deal {
 
     @Id
-    private String dealUniqueId;
+    private String id;
 
     @Pattern(regexp = "^[A-Z]{3}$", message = "Invalid currency code format")
     @Column(name = "from_currency", nullable = false, length = 3)

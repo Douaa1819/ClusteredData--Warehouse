@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getDescription(false)
         );
-        return  new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidCurrencyException.class)
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RequestAlreadyExistException.class)
-    public ResponseEntity<ErrorResponse>handleRequestAlreaduExistException(RequestAlreadyExistException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleRequestAlreaduExistException(RequestAlreadyExistException ex, WebRequest request) {
         log.error("Request already exists: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleAllExceptions ( Exception ex, WebRequest request ) {
+    public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
         log.error("Unhandled exception occurred", ex);
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -64,13 +64,5 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(Exception.class)
-    public Map<String, String> handleExceptions(Exception ex) {
-        log.error("An unexpected error occurred: {}", ex.getMessage(), ex);
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", ex.getMessage());
-        return errors;
     }
 }

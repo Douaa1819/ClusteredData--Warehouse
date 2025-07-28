@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public record DealRequestDto(
-        @NotBlank(message = "Deal ID is required") String dealUniqueId,
+        @NotBlank(message = "Deal ID is required") String id,
 
         @NotNull(message = "From currency is required") String fromCurrencyCode,
 

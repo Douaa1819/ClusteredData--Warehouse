@@ -17,5 +17,7 @@ spring:
     port: 8081
   logging:
     level:
+      root: INFO
       org.springframework.data.jpa.repository.query: debug
       org.hibernate.SQL: debug
+      org.hibernate.type.descriptor.sql: trace
