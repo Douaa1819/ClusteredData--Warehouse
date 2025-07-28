@@ -62,7 +62,7 @@ A Spring Boot application to manage and persist Foreign Exchange  deals in a dat
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 ###  Prerequisites
 
@@ -172,7 +172,7 @@ Volumes:
 ---
 
 
-## 🛠 Makefile Commands
+##  Makefile Commands
 
 | Command       | Description                                 |
 |---------------|---------------------------------------------|

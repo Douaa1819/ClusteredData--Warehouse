@@ -34,7 +34,6 @@ public class Deal {
     @NotNull
     private String toCurrency;
 
-    @PastOrPresent
     @Column(name = "deal_timestamp", nullable = false)
     @NotNull
     private LocalDateTime dealTimestamp;
